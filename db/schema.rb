@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2024_03_25_114708) do
-  create_table "categories", force: :cascade do |t|
+  create_table "categories", charset: "utf8mb3", force: :cascade do |t|
     t.integer "parent_id"
     t.string "name"
     t.datetime "created_at", null: false

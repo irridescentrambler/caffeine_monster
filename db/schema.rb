@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_18_141057) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_18_143402) do
+  create_table "account_users", charset: "utf8mb3", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "accounts", charset: "utf8mb3", force: :cascade do |t|
     t.decimal "balance", precision: 10
     t.datetime "created_at", null: false
@@ -23,6 +30,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_18_141057) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active"
+  end
+
+  create_table "users", charset: "utf8mb3", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

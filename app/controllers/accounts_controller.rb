@@ -1,7 +1,7 @@
 class AccountsController < ApplicationController
   before_action :set_account, only: %i[show edit update destroy]
   skip_before_action :verify_authenticity_token, only: %i[add_money withdraw_money]
-  before_action :load_account, only: %i[add_money]
+  before_action :load_account, only: %i[add_money withdraw_money]
 
   # GET /accounts or /accounts.json
   def index
@@ -67,7 +67,7 @@ class AccountsController < ApplicationController
         end
       else
         format.json do
-          render json: { message: account.errors.messages }
+          render json: { message: @account.errors.messages }, status: :unprocessable_entity
         end
       end
     end
@@ -77,13 +77,13 @@ class AccountsController < ApplicationController
     money_to_withdraw = params[:money_to_withdraw].to_i
     @account.withdraw_money(money_to_withdraw)
     respond_to do |format|
-      if account.save
+      if @account.save
         format.json do
           render json: { message: "Money withdrawn #{money_to_withdraw} successfully" }
         end
       else
         format.json do
-          render json: { message: account.errors.messages }
+          render json: { message: @account.errors.messages }, status: :unprocessable_entity
         end
       end
     end

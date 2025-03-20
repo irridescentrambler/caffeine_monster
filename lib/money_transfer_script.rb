@@ -1,8 +1,8 @@
 require 'net/http'
 require 'uri'
 
-def add_money(money_amount)
-  uri = URI.parse('http://localhost:3000/accounts/2/add_money')
+def add_money(account_id, money_amount)
+  uri = URI.parse("http://localhost:3000/accounts/#{account_id}/add_money")
   request = Net::HTTP::Put.new(uri)
   request['Accept'] = 'application/json'
   request.set_form_data(
@@ -18,12 +18,12 @@ def add_money(money_amount)
   end
 end
 
-def withdraw_money(money_amount)
-  uri = URI.parse('http://localhost:3000/accounts/2/add_money')
+def withdraw_money(account_id, money_amount)
+  uri = URI.parse("http://localhost:3000/accounts/#{account_id}/withdraw_money")
   request = Net::HTTP::Put.new(uri)
   request['Accept'] = 'application/json'
   request.set_form_data(
-    'money_to_add' => -money_amount
+    'money_to_withdraw' => money_amount
   )
 
   req_options = {

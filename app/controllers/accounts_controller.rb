@@ -1,6 +1,7 @@
 class AccountsController < ApplicationController
   before_action :set_account, only: %i[show edit update destroy]
   skip_before_action :verify_authenticity_token, only: %i[add_money withdraw_money]
+  around_action :execute_transaction, only: %i[add_money withdraw_money]
   before_action :load_account, only: %i[add_money withdraw_money]
 
   # GET /accounts or /accounts.json
@@ -102,11 +103,17 @@ class AccountsController < ApplicationController
   end
 
   def load_account
-    @account = Account.find_by(id: params[:id])
+    @account = Account.lock.find_by(id: params[:id])
     return if @account
 
     respond_to do |format|
       format.json { render json: { message: 'Invalid account' }, status: :not_found }
+    end
+  end
+
+  def execute_transaction
+    Account.transaction do
+      yield
     end
   end
 end

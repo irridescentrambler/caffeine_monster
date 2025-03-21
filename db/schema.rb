@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_21_132921) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_21_134309) do
   create_table "account_users", charset: "utf8mb3", force: :cascade do |t|
     t.integer "user_id"
     t.integer "account_id"
@@ -32,6 +32,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_21_132921) do
     t.boolean "active"
   end
 
+  create_table "memberships", charset: "utf8mb3", force: :cascade do |t|
+    t.integer "member_id"
+    t.integer "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "teams", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -43,7 +50,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_21_132921) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end

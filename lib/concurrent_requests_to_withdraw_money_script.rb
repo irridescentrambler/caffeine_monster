@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'money_transfer_script'
 response1 = nil
 response2 = nil

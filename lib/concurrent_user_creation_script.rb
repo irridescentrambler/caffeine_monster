@@ -1,4 +1,4 @@
-require_relative 'user_creation_script.rb'
+require_relative 'user_creation_script'
 
 response1 = nil
 response2 = nil

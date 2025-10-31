@@ -2,5 +2,5 @@
 
 # Category model interacts with categories class
 class Category < ApplicationRecord
-  validates_uniqueness_of :name, scope: %i[parent_id], if: :active
+  validates :name, uniqueness: { scope: %i[parent_id], if: :active }
 end

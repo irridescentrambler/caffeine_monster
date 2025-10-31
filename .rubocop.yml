@@ -1,2 +1,5 @@
+require:
+  - rubocop-rails
+
 Metrics/MethodLength:
   Max: 20

@@ -5,9 +5,6 @@ ruby '3.1.3'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.1.2'
 
-# Adds awesome print
-gem 'awesome_print', '~> 1.8'
-
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
@@ -19,9 +16,6 @@ gem 'puma', '>= 5.0'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
-
-# Rubocop for linting check
-gem 'rubocop', '~> 1.62'
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem 'turbo-rails'
@@ -52,8 +46,14 @@ gem 'bootsnap', require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem 'awesome_print', '~> 1.8'
   gem 'debug', platforms: %i[mri windows]
+  gem 'factory_bot_rails', '~> 6.5', '>= 6.5.1'
   gem 'pry', '~> 0.14.1'
+  gem 'rubocop', '~> 1.62'
+  gem 'rubocop-capybara', '~> 2.22', '>= 2.22.1'
+  gem 'rubocop-performance', '~> 1.26', '>= 1.26.1'
+  gem 'rubocop-rails', '~> 2.33', '>= 2.33.4'
 end
 
 group :development do
@@ -75,4 +75,4 @@ group :test do
   gem 'selenium-webdriver'
 end
 
-gem 'mysql2', '~> 0.5.6'
+gem 'mysql2', '~> 0.5.5'

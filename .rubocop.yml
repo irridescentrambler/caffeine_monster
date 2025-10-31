@@ -1,5 +1,7 @@
-require:
+plugins:
   - rubocop-rails
+  - rubocop-capybara
+  - rubocop-performance
 
 Metrics/MethodLength:
   Max: 20

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'money_transfer_script'
 require 'benchmark'
 
@@ -12,4 +14,4 @@ measured_benchmark = Benchmark.measure do
   threads.each(&:join)
 end
 
-puts measured_benchmark
+Rails.logger.debug measured_benchmark

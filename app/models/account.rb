@@ -6,6 +6,8 @@ class Account < ApplicationRecord
   has_many :users, through: :account_users
   validates :balance, numericality: { greater_than_or_equal_to: 0 }
 
+  track_for_overfetching
+
   def add_money(amount)
     self.balance += amount
     Rails.logger.debug "Money #{amount} getting added to the account #{id}"

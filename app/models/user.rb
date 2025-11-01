@@ -8,4 +8,5 @@ class User < ApplicationRecord
   has_and_belongs_to_many :teams, join_table: :memberships, foreign_key: :member_id
 
   validates :email, uniqueness: true
+  track_for_overfetching
 end

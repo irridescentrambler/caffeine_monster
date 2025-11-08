@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# AccountsController deals with accounts model in this application.
 class AccountsController < ApplicationController
   before_action :set_account, only: %i[show edit update destroy]
   skip_before_action :verify_authenticity_token, only: %i[add_money withdraw_money]
@@ -7,7 +8,7 @@ class AccountsController < ApplicationController
 
   # GET /accounts or /accounts.json
   def index
-    @accounts = Account.all
+    @accounts = Account.page(params[:page]).per(params[:per])
   end
 
   # GET /accounts/1 or /accounts/1.json

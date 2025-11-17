@@ -4,4 +4,6 @@ development:
   database: caffeine_monster
   pool: 5
   username: root
-  password:
+  password: root
+  host: db
+  port: 3306

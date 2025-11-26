@@ -51,7 +51,7 @@ group :development, :test do
   gem 'awesome_print', '~> 1.8'
   gem 'debug', platforms: %i[mri windows]
   gem 'factory_bot_rails', '~> 6.5', '>= 6.5.1'
-  gem 'pry', '~> 0.14.1'
+  gem 'pry', '~> 0.15.2'
   gem 'rubocop', '~> 1.62'
   gem 'rubocop-capybara', '~> 2.22', '>= 2.22.1'
   gem 'rubocop-performance', '~> 1.26', '>= 1.26.1'

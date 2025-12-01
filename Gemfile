@@ -55,7 +55,7 @@ group :development, :test do
   gem 'rubocop', '~> 1.62'
   gem 'rubocop-capybara', '~> 2.22', '>= 2.22.1'
   gem 'rubocop-performance', '~> 1.26', '>= 1.26.1'
-  gem 'rubocop-rails', '~> 2.33', '>= 2.33.4'
+  gem 'rubocop-rails', '~> 2.34'
 end
 
 group :development do

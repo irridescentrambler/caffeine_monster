@@ -52,6 +52,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'factory_bot_rails', '~> 6.5', '>= 6.5.1'
   gem 'pry', '~> 0.15.2'
+  gem 'rspec-rails'
   gem 'rubocop', '~> 1.62'
   gem 'rubocop-capybara', '~> 2.22', '>= 2.22.1'
   gem 'rubocop-performance', '~> 1.26', '>= 1.26.1'
@@ -72,6 +73,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
+  gem 'database_cleaner-active_record'
   gem 'selenium-webdriver'
 end
 

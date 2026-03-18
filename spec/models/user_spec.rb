@@ -112,7 +112,7 @@ RSpec.describe User, type: :model do
   describe 'CRUD operations' do
     describe 'create' do
       it 'creates a user with valid attributes' do
-        user = User.create(name: 'John Doe', email: 'john@example.com')
+        user = create(:user, name: 'John Doe', email: 'john@example.com')
 
         expect(user).to be_persisted
         expect(user.name).to eq('John Doe')
@@ -127,7 +127,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'creates user without name (name is optional)' do
-        user = User.create(email: 'nameless@example.com')
+        user = create(:user, email: 'nameless@example.com', name: nil)
 
         expect(user).to be_persisted
         expect(user.name).to be_nil

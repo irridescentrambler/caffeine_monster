@@ -1,0 +1,7 @@
+POST http://0.0.0.0:3000/sessions
+content-type: application/json
+
+{
+    "email": "mohadikar59@gmail.com",
+    "password": "Sinistro102!"
+}

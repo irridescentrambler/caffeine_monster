@@ -5,8 +5,8 @@ class AuthorizeUserService < BaseService
   attr_reader :headers
 
   def initialize(headers)
+    super()
     @headers = headers
-    super
   end
 
   def call
@@ -30,7 +30,11 @@ class AuthorizeUserService < BaseService
   end
 
   def http_auth_token
-    auth_header = headers.fetch('HTTP_AUTHORIZATION') || headers.fetch('AUTHORIZATION') || ''
+    auth_header = begin
+      headers.fetch('HTTP_AUTHORIZATION') || headers.fetch('AUTHORIZATION')
+    rescue KeyError
+      ''
+    end
     scheme, token = auth_header.split(' ', 2)
     return unless scheme == 'Bearer'
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  draw(:external_routes)
   resources :memberships
   resources :teams
   resources :account_users

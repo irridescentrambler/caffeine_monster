@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Handles CRUD operations for `User` records and responds to both HTML and JSON formats.
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
   skip_before_action :verify_authenticity_token, only: %i[create]
@@ -67,6 +68,6 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:name, :email)
+    params.require(:user).permit(:name, :email, :password)
   end
 end

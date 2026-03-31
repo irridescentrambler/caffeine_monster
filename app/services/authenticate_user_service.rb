@@ -7,7 +7,7 @@ class AuthenticateUserService < BaseService
   def initialize(email, password)
     @email = email
     @password = password
-    super
+    super()
   end
 
   def call

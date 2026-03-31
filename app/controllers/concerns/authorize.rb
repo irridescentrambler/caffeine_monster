@@ -9,6 +9,8 @@ module Authorize
   end
 
   def authorize_request
+    return if request.format.html?
+
     response = AuthorizeUserService.call(request.headers)
     if response.success?
       @current_user = response.data[:user]

@@ -9,7 +9,6 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-
-1000.times do
-  FactoryBot.create(:account_user)
-end
+#
+# password : iiqZpytwxoMGrGfiXRptnLfJpxCsHoaq
+# host : mysql.railway.internal

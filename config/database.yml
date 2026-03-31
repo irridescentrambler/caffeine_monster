@@ -1,12 +1,12 @@
 development:
   adapter: mysql2
   encoding: utf8
-  database: caffeine_monster
+  database: <%= ENV.fetch('DATABASE_NAME', 'caffeine_monster') %>
   pool: 5
   username: root
-  password: root
-  host: db
-  port: 3306
+  password: <%= ENV.fetch('DATABASE_PASSWORD', 'root') %>
+  host: <%= ENV.fetch('DATABASE_HOST', 'db') %>
+  port: <%= ENV.fetch('DATABASE_PORT', 3306) %>
 test:
   adapter: mysql2
   encoding: utf8
@@ -19,9 +19,9 @@ test:
 production:
   adapter: mysql2
   encoding: utf8
-  database: caffeine_monster
+  database: <%= ENV.fetch('DATABASE_NAME', 'caffeine_monster') %>
   pool: 5
   username: root
-  password: root
-  host: db
-  port: 3306
+  password: <%= ENV.fetch('DATABASE_PASSWORD', 'root') %>
+  host: <%= ENV.fetch('DATABASE_HOST', 'db') %>
+  port: <%= ENV.fetch('DATABASE_PORT', 3306) %>

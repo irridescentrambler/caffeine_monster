@@ -13,7 +13,7 @@ module Authorize
     if response.success?
       @current_user = response.data[:user]
     else
-      render json: { error: 'Error' }, status: response.error
+      render json: { error: 'Unauthorized' }, status: response.error
     end
   end
 end

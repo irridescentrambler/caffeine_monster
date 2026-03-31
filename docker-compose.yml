@@ -8,13 +8,14 @@ services:
       - "3307:3306"
   web:
     build:
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     environment:
       DATABASE_NAME: caffeine_monster
       DATABASE_PASSWORD: root
       DATABASE_HOST: db
       DATABASE_PORT: 3306
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
     working_dir: /myapp
     volumes:
       - .:/myapp

@@ -14,7 +14,8 @@ ENV RAILS_ENV="production" \
     BUNDLE_WITHOUT="development:test" \
     RAILS_SERVE_STATIC_FILES="true" \
     SECRET_KEY_BASE="b5e69fbb6fa0e9965407fc86494a1c3c83d5ff2973a9da0a3d02593c8203f0d85a4a1e8fc7393d6c6ce4$" \
-    RAILS_MASTER_KEY="${RAILS_MASTER_KEY}"
+    RAILS_MASTER_KEY="${RAILS_MASTER_KEY}" \
+    REDIS_URL="${REDIS_URL}"
 
 # Throw-away build stage to reduce size of final image
 FROM base as build

@@ -6,6 +6,10 @@ services:
       MYSQL_DATABASE: caffeine_monster
     ports:
       - "3307:3306"
+  redis:
+    image: redis:8.6.2
+    ports:
+    - "6379:6379"
   web:
     build:
       dockerfile: Dockerfile
@@ -16,6 +20,7 @@ services:
       DATABASE_HOST: db
       DATABASE_PORT: 3306
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      REDIS_URL: ${REDIS_URL}
     working_dir: /myapp
     volumes:
       - .:/myapp

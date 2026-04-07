@@ -8,8 +8,8 @@ class SessionsController < ApplicationController
   def new; end
 
   def create
-    user = User.find_by(email: params[:email])
-    if user&.authenticate(params[:password])
+    @user = User.find_by(email: params[:email])
+    if @user&.authenticate(params[:password])
       handle_successful_login
     else
       handle_error
@@ -26,11 +26,11 @@ class SessionsController < ApplicationController
   def handle_successful_login
     respond_to do |format|
       format.html do
-        session[:user_id] = user.id
+        session[:user_id] = @user.id
         redirect_to users_path, notice: 'Logged in successfully.'
       end
       format.json do
-        token = JsonWebToken.encode({ user_id: user.id })
+        token = JsonWebToken.encode({ user_id: @user.id })
         render json: { token: token }
       end
     end

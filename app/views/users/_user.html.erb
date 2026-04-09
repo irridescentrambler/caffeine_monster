@@ -1,12 +1,15 @@
-<div id="<%= dom_id user %>">
-  <p>
-    <strong>Name:</strong>
-    <%= user.name %>
-  </p>
-
-  <p>
-    <strong>Email:</strong>
-    <%= user.email %>
-  </p>
-
+<div id="<%= dom_id user %>" class="space-y-2">
+  <div class="flex items-center space-x-3">
+    <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">
+      <%= user.name.to_s.first&.upcase || "?" %>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500">Name</p>
+      <p class="font-semibold text-gray-900"><%= user.name %></p>
+    </div>
+  </div>
+  <div>
+    <p class="text-sm text-gray-500">Email</p>
+    <p class="text-gray-800"><%= user.email %></p>
+  </div>
 </div>

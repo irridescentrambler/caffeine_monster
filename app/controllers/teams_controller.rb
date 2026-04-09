@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
+# Manages teams rest endpoints
 class TeamsController < ApplicationController
   before_action :set_team, only: %i[show edit update destroy]
 
   # GET /teams or /teams.json
   def index
-    @teams = Team.all
+    @teams = Team.page(params[:page])
   end
 
   # GET /teams/1 or /teams/1.json

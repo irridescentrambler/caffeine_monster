@@ -1,14 +1,22 @@
-<p style="color: green"><%= notice %></p>
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Users</h1>
+  <%= link_to "New user", new_user_path, class: "px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-medium" %>
+</div>
 
-<h1>Users</h1>
-
-<div id="users">
+<div id="users" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
   <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-5 hover:shadow-lg transition-shadow">
+      <%= render user %>
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+        <%= link_to "Show this user", user, class: "text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 text-sm font-medium" %>
+      </div>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New user", new_user_path %>
+<div class="mt-8 flex flex-col items-center space-y-2">
+  <%= paginate @users %>
+  <p class="text-sm text-gray-500 dark:text-gray-400">
+    <%= page_entries_info @users %>
+  </p>
+</div>

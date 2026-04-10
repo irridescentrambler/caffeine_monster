@@ -1,10 +1,11 @@
-<p style="color: green"><%= notice %></p>
+<div class="max-w-xl">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <%= render @user %>
+  </div>
 
-<%= render @user %>
-
-<div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
-
-  <%= button_to "Destroy this user", @user, method: :delete %>
+  <div class="mt-6 flex items-center space-x-3">
+    <%= link_to "Edit this user", edit_user_path(@user), class: "px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm font-medium" %>
+    <%= link_to "Back to users", users_path, class: "px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 text-sm font-medium" %>
+    <%= button_to "Destroy this user", @user, method: :delete, class: "px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 text-sm font-medium", form: { data: { turbo_confirm: "Are you sure?" } } %>
+  </div>
 </div>

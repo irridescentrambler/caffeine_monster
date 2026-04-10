@@ -1,11 +1,11 @@
 <div class="max-w-xl">
-  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
     <%= render @team %>
   </div>
 
   <div class="mt-6 flex items-center space-x-3">
     <%= link_to "Edit this team", edit_team_path(@team), class: "px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm font-medium" %>
-    <%= link_to "Back to teams", teams_path, class: "px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 text-sm font-medium" %>
+    <%= link_to "Back to teams", teams_path, class: "px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 text-sm font-medium" %>
     <%= button_to "Destroy this team", @team, method: :delete, class: "px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 text-sm font-medium", form: { data: { turbo_confirm: "Are you sure?" } } %>
   </div>
 </div>

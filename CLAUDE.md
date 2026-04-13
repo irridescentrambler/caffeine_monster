@@ -1,122 +1,79 @@
-# Caffeine Monster
+# CLAUDE.md
 
-Rails 7.1.2 app on Ruby 3.1.3 with MySQL and Redis.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Stack
 
-- **Framework**: Rails 7.1.2, Hotwire (Turbo + Stimulus), Importmap
-- **Auth**: Custom — bcrypt for passwords, JWT for web page auth (no Devise)
-- **Database**: MySQL (mysql2 ~> 0.5.5)
-- **Cache / Realtime**: Redis (Action Cable)
-- **Pagination**: Kaminari
-- **Rate Limiting**: Rack::Attack
-- **Tests**: RSpec, FactoryBot, Capybara + Selenium WebDriver, database_cleaner-active_record
-- **Linter**: RuboCop with rubocop-rails, rubocop-performance, rubocop-capybara plugins
+Rails 7.1.2 on Ruby 3.1.3 with MySQL, Redis, Hotwire (Turbo + Stimulus), Importmap. No Devise — auth is hand-rolled with bcrypt + JWT.
 
 ## Common Commands
 
 ```bash
-# Server
 bin/rails server
-
-# Console
 bin/rails console
-
-# Database
 bin/rails db:migrate
-bin/rails db:rollback
-bin/rails db:seed
-bin/rails db:reset          # drop + create + migrate + seed
+bin/rails db:reset                          # drop + create + migrate + seed
 
-# Generators
-bin/rails generate model Foo bar:string
-bin/rails generate migration AddColumnToTable column:type
-bin/rails generate rspec:model Foo
-
-# Tests
 bundle exec rspec                           # full suite
 bundle exec rspec spec/models/              # models only
 bundle exec rspec spec/path/to/file_spec.rb # single file
 bundle exec rspec spec/path/to/file_spec.rb:42  # single example
 
-# Linting
-bundle exec rubocop                         # check all
-bundle exec rubocop --autocorrect           # fix auto-correctable offenses
+bundle exec rubocop                         # lint all
+bundle exec rubocop --autocorrect           # auto-fix
 bundle exec rubocop path/to/file.rb         # single file
 
-# Routes
-bin/rails routes
-bin/rails routes --grep user
+bin/rails routes --grep user                # search routes
 ```
 
 ## Code Conventions
 
 - Every Ruby file starts with `# frozen_string_literal: true`
-- Max method length: 20 lines (RuboCop enforced)
-- `Metrics/BlockLength` is disabled (long blocks like RSpec describes are fine)
+- Max method length: 20 lines (RuboCop enforced); `Metrics/BlockLength` is disabled
 - Business logic lives in `app/services/` — keep controllers thin
-- Use FactoryBot for test data; do not use Rails fixtures
+- Use FactoryBot for test data; never use Rails fixtures
 - Write RSpec tests only — ignore the `test/` directory (legacy, not used)
-- `verify_partial_doubles: true` is set in spec_helper — all stubs must be on real methods
+- `verify_partial_doubles: true` — all stubs must be on real methods
+- Default pagination: 15 per page (set in `ApplicationRecord`)
 
-## Architecture Notes
+## Architecture
 
-- **Services layer**: Extract complex business logic to `app/services/`
-- **Auth flow**: Custom JWT issued at login, verified in `before_action` on authenticated pages
-- **Rate limiting**: Rack::Attack configured — be mindful when writing endpoints that accept unauthenticated requests
-- No Devise — session and authentication logic is hand-rolled
+### Dual Auth: Sessions (HTML) + JWT (API)
 
-## Project Structure
+The `Authorize` concern (`app/controllers/concerns/authorize.rb`) handles both auth modes:
 
-```
-app/
-  controllers/    # Thin — delegate to services
-  models/         # ActiveRecord models
-  services/       # Business logic
-  views/          # ERB templates with Turbo frames/streams
-  javascript/     # Stimulus controllers
-  jobs/           # ActiveJob background jobs
-  mailers/
-  channels/       # Action Cable channels
-config/
-  routes.rb
-  initializers/
-db/
-  migrate/
-  schema.rb
-  seeds.rb
-spec/             # All tests go here
-  models/
-  controllers/
-  system/         # Capybara system tests
-  factories/      # FactoryBot factories
-  support/        # Shared helpers and config
-```
+- **HTML requests**: Checks `session[:user_id]`, redirects to `/login` if missing
+- **JSON requests**: Calls `AuthorizeUserService` which decodes a Bearer JWT from the Authorization header
 
-## Testing Patterns
+`SessionsController` issues both: sets `session[:user_id]` for HTML logins, returns a JWT token for JSON logins. JWT encoding/decoding lives in `lib/json_web_token.rb` using `Rails.application.credentials.auth_secret_key`.
 
-```ruby
-# Model spec
-RSpec.describe User, type: :model do
-  subject { build(:user) }
-  it { is_expected.to be_valid }
-end
+Controllers skip auth with `skip_before_action :authorize_request` for public actions (e.g., login, user creation).
 
-# Controller spec
-RSpec.describe UsersController, type: :controller do
-  let(:user) { create(:user) }
-  # ...
-end
+### Service Layer Pattern
 
-# System spec (Capybara)
-RSpec.describe "Login", type: :system do
-  it "allows a user to log in" do
-    visit login_path
-    # ...
-  end
-end
-```
+All services inherit from `BaseService` (`app/services/base_service.rb`):
+- Provides a `Response` struct with `data`, `error`, and `success?`
+- Class-level `.call(...)` instantiates and calls `#call`
+- Services: `AuthenticateUserService` (login), `AuthorizeUserService` (JWT verification)
 
-## Environment Variables
+### Domain Model
 
-Uses standard Rails credentials or `.env`-style setup. Check `config/credentials.yml.enc` and environment-specific files for secrets (JWT secret key, database credentials, Redis URL, etc.).
+- **User** has_secure_password; has_one :account (through AccountUser); has_many :teams (through Membership)
+- **Account** tracks balance (decimal, >= 0); has `add_money`/`withdraw_money` with bang variants
+- **Team** has_many :members (users) through Membership
+- **Membership** join: belongs_to :member (class_name: 'User'), belongs_to :team
+- **Category** validates name uniqueness scoped to parent_id (when active)
+
+### Rate Limiting
+
+Rack::Attack (`config/initializers/rack_attack.rb`): 100 requests per IP per minute. Returns 429 JSON on throttle.
+
+### CI
+
+GitHub Actions runs RuboCop on push (`.github/workflows/rubocop.yml`). Dependabot is configured for dependency updates.
+
+## Test Setup
+
+- Database cleaner: transaction strategy by default, truncation for JS tests (`spec/rails_helper.rb`)
+- FactoryBot syntax methods included globally
+- ActiveSupport::Testing::TimeHelpers included for time travel in tests

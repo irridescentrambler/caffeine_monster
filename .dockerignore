@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# Logs and temp files
+log/*
+tmp/*
+storage/*
+
+# Test artifacts
+spec/reports
+coverage
+
+# Editor files
+.vscode
+.idea
+*.swp
+*.swo
+
+# Docker files themselves (no recursion needed)
+.dockerignore
+docker-compose*.yml
+
+# Secrets — NEVER copy these into an image
+config/master.key
+config/credentials/*.key
+.env
+.env.*
+
+# Node / assets build artifacts (generated at build time)
+node_modules
+public/assets
+public/packs

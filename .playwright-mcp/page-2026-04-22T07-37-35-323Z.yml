@@ -1,0 +1,11 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - link [ref=e3] [cursor=pointer]:
+      - /url: https://rubyonrails.org
+  - list [ref=e4]:
+    - listitem [ref=e5]:
+      - strong [ref=e6]: "Rails version:"
+      - text: 7.1.2
+    - listitem [ref=e7]:
+      - strong [ref=e8]: "Ruby version:"
+      - text: ruby 3.1.3p185 (2022-11-24 revision 1a6b16756e) [aarch64-linux]

@@ -11,5 +11,9 @@
         ]
       }
     ]
+  },
+  "enabledPlugins": {
+    "playwright@claude-plugins-official": true,
+    "coderabbit@claude-plugins-official": true
   }
 }

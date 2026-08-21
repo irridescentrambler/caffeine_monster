@@ -1,0 +1,29 @@
+- generic [active] [ref=e181]:
+  - navigation [ref=e182]:
+    - generic [ref=e183]:
+      - generic [ref=e184]:
+        - generic [ref=e185]: CaffeineMonster
+        - link "Users" [ref=e186] [cursor=pointer]:
+          - /url: /users
+        - link "Teams" [ref=e187] [cursor=pointer]:
+          - /url: /teams
+      - generic [ref=e188]:
+        - generic [ref=e189]: Logged in as test@example.com
+        - link "Log Out" [ref=e190] [cursor=pointer]:
+          - /url: /logout
+  - main [ref=e191]:
+    - generic [ref=e192]:
+      - heading "New user" [level=1] [ref=e193]
+      - generic [ref=e195]:
+        - generic [ref=e196]:
+          - generic [ref=e197]: Name
+          - textbox "Name" [ref=e198]
+        - generic [ref=e199]:
+          - generic [ref=e200]: Email
+          - textbox "Email" [ref=e201]
+        - generic [ref=e202]:
+          - generic [ref=e203]: Password
+          - textbox "Password" [ref=e204]
+        - button "Create User" [ref=e206] [cursor=pointer]
+      - link "Back to users" [ref=e208] [cursor=pointer]:
+        - /url: /users

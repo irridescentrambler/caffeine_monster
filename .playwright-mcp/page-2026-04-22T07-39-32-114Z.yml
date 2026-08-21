@@ -1,0 +1,69 @@
+- generic [active] [ref=e23]:
+  - navigation [ref=e24]:
+    - generic [ref=e25]:
+      - generic [ref=e26]:
+        - generic [ref=e27]: CaffeineMonster
+        - link "Users" [ref=e28] [cursor=pointer]:
+          - /url: /users
+        - link "Teams" [ref=e29] [cursor=pointer]:
+          - /url: /teams
+      - generic [ref=e30]:
+        - generic [ref=e31]: Logged in as test@example.com
+        - link "Log Out" [ref=e32] [cursor=pointer]:
+          - /url: /logout
+  - main [ref=e33]:
+    - generic [ref=e34]: Logged in successfully.
+    - generic [ref=e35]:
+      - heading "Users" [level=1] [ref=e36]
+      - link "New user" [ref=e37] [cursor=pointer]:
+        - /url: /users/new
+    - generic [ref=e38]:
+      - generic [ref=e39]:
+        - generic [ref=e40]:
+          - generic [ref=e41]:
+            - generic [ref=e42]: T
+            - generic [ref=e43]:
+              - paragraph [ref=e44]: Name
+              - paragraph [ref=e45]: Test User
+          - generic [ref=e46]:
+            - paragraph [ref=e47]: Email
+            - paragraph [ref=e48]: test@example.com
+        - link "Show this user" [ref=e50] [cursor=pointer]:
+          - /url: /users/1
+      - generic [ref=e51]:
+        - generic [ref=e52]:
+          - generic [ref=e53]:
+            - generic [ref=e54]: A
+            - generic [ref=e55]:
+              - paragraph [ref=e56]: Name
+              - paragraph [ref=e57]: Alice Smith
+          - generic [ref=e58]:
+            - paragraph [ref=e59]: Email
+            - paragraph [ref=e60]: alice@example.com
+        - link "Show this user" [ref=e62] [cursor=pointer]:
+          - /url: /users/2
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - generic [ref=e65]:
+            - generic [ref=e66]: B
+            - generic [ref=e67]:
+              - paragraph [ref=e68]: Name
+              - paragraph [ref=e69]: Bob Jones
+          - generic [ref=e70]:
+            - paragraph [ref=e71]: Email
+            - paragraph [ref=e72]: bob@example.com
+        - link "Show this user" [ref=e74] [cursor=pointer]:
+          - /url: /users/3
+      - generic [ref=e75]:
+        - generic [ref=e76]:
+          - generic [ref=e77]:
+            - generic [ref=e78]: C
+            - generic [ref=e79]:
+              - paragraph [ref=e80]: Name
+              - paragraph [ref=e81]: Carol White
+          - generic [ref=e82]:
+            - paragraph [ref=e83]: Email
+            - paragraph [ref=e84]: carol@example.com
+        - link "Show this user" [ref=e86] [cursor=pointer]:
+          - /url: /users/4
+    - paragraph [ref=e88]: Displaying all 4 users

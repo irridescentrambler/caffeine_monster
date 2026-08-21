@@ -1,0 +1,30 @@
+- generic [active] [ref=e89]:
+  - navigation [ref=e90]:
+    - generic [ref=e91]:
+      - generic [ref=e92]:
+        - generic [ref=e93]: CaffeineMonster
+        - link "Users" [ref=e94] [cursor=pointer]:
+          - /url: /users
+        - link "Teams" [ref=e95] [cursor=pointer]:
+          - /url: /teams
+      - generic [ref=e96]:
+        - generic [ref=e97]: Logged in as test@example.com
+        - link "Log Out" [ref=e98] [cursor=pointer]:
+          - /url: /logout
+  - main [ref=e99]:
+    - generic [ref=e100]:
+      - generic [ref=e102]:
+        - generic [ref=e103]:
+          - generic [ref=e104]: T
+          - generic [ref=e105]:
+            - paragraph [ref=e106]: Name
+            - paragraph [ref=e107]: Test User
+        - generic [ref=e108]:
+          - paragraph [ref=e109]: Email
+          - paragraph [ref=e110]: test@example.com
+      - generic [ref=e111]:
+        - link "Edit this user" [ref=e112] [cursor=pointer]:
+          - /url: /users/1/edit
+        - link "Back to users" [ref=e113] [cursor=pointer]:
+          - /url: /users
+        - button "Destroy this user" [ref=e115] [cursor=pointer]

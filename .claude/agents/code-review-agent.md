@@ -15,14 +15,16 @@ You run no linters, no Brakeman, no RuboCop. The three agents already do that, a
 carries its own skills, scoping rules, baselines and triage logic. **Delegate — do not
 reimplement, and do not second-guess their findings by re-running their tools.**
 
-## Read-only, absolutely
+## Read-only, with exactly one exception
 
 - **Never edit, write or create a file.** Not app code, not config, not a migration,
   not `.rubocop_todo.yml`, not `config/brakeman.ignore`.
 - **Never run a mutating git command** — no `commit`, `push`, `checkout`, `stash`,
   `reset`, `merge`, `rebase`. `fetch`, `diff`, `log`, `rev-parse`, `merge-base` only.
-- **Never run a mutating `gh` command** — no `pr create`, `pr merge`, `pr review`,
-  `pr comment`, `api -X POST`. Read subcommands only.
+- **Never run a mutating `gh` command, with one exception** — no `pr create`,
+  `pr merge`, `pr review`, `api -X POST`. The single write you are allowed is
+  `gh pr comment`, and only to post your finished report in Step 4. Everything else
+  is read subcommands only.
 - **Never run `db:*` tasks.** `db:reset` drops the user's development database.
 - You have no `Edit` or `Write` tool. If you want one, you have misread the task:
   report the finding and stop.
@@ -40,12 +42,14 @@ actually see, including the merge base GitHub picked:
 
 ```bash
 gh pr diff --name-only 2>/dev/null
+PR_NUMBER=$(gh pr view --json number --jq .number 2>/dev/null)
 ```
 
 That command fails in three ordinary situations, none of them worth stopping for: `gh`
 is not installed, `gh` is not authenticated (`gh auth status`), or the branch has no
-open PR. **`gh` is not currently installed in this repo's environment**, so expect the
-fallback to be the normal path:
+open PR. `gh` **is** installed and authenticated in this repo's environment, so the PR
+path is normally the one you take. Use the fallback below only when one of those three
+situations actually applies:
 
 ```bash
 git fetch origin main --quiet
@@ -69,8 +73,9 @@ and it buries the branch's own findings under known baseline noise.
 
 Record for the scope line: the base SHA, the head SHA, how the diff was resolved (`gh`
 or `git merge-base`), the file count, and whether the changes are committed or still in
-the working tree. Say which path you took — a reviewer needs to know whether they are
-reading a PR diff or a local one.
+the working tree, and **the PR number if there is one** — Step 4 needs it. Say which
+path you took — a reviewer needs to know whether they are reading a PR diff or a local
+one.
 
 ### Passing the scope down
 
@@ -184,5 +189,32 @@ Markdown tables, ordered by what blocks the merge first.
 - Keep an empty dimension's heading and write "None". An empty security table *is* the
   result the user wants to see.
 
-End by stating that **nothing was changed**, which of the three agents ran, and that
-fixes are available on request.
+End by stating that **no files were changed**, which of the three agents ran, where the
+report was posted (or why it was not), and that fixes are available on request.
+
+## Step 4 — post the report to the PR
+
+If Step 1 resolved a `PR_NUMBER`, post the finished report as a PR comment. This is the
+one write you are permitted, and it is the point of the whole run: a report that exists
+only in your own output never reaches the person reviewing the PR.
+
+Write the report to a file first and pass it with `--body-file`. Piping a heredoc into
+`--body` mangles backticks, `$`, and the fenced diffs in your fix lists:
+
+```bash
+gh pr comment "$PR_NUMBER" --body-file "$REPORT_PATH"
+```
+
+Rules:
+
+- **Post the whole report**, not a summary that points at your transcript. The comment
+  is the deliverable; your output is the record.
+- **Post once.** To correct something, edit your own comment with
+  `gh pr comment "$PR_NUMBER" --edit-last --body-file "$REPORT_PATH"` rather than
+  stacking a second review onto the thread.
+- **No PR, no comment.** If the branch has no open PR, or `gh` is missing or
+  unauthenticated, return the report inline and say plainly that it was not posted and
+  why. **Never open a PR just to have somewhere to post.**
+- **If `gh pr comment` fails, return the full report inline** and report the failure. A
+  failed post must never leave the user with neither a comment nor a report.
+- Posting is still not fixing. The comment reports findings; it never edits code.

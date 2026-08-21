@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       put :add_money
       put :withdraw_money
     end
+    resource :transfer, only: %i[create], controller: 'account_transfers'
   end
   resources :sessions, only: [:create]
   get '/login', to: 'sessions#new', as: :login
